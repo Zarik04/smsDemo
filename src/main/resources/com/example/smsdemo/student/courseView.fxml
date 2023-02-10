@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="1004.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.smsdemo.controllers.student.SubjectController">
+   <children>
+      <HBox alignment="CENTER_LEFT" layoutY="-2.0" prefHeight="76.0" prefWidth="1004.0" spacing="25.0" style="-fx-background-color: #47D1D1;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onDashboardButton" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 1.5;" text="Dashboard" textFill="WHITE">
+               <padding>
+                  <Insets bottom="7.0" left="15.0" right="15.0" top="7.0" />
+               </padding>
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="10.0" layoutY="32.0" mnemonicParsing="false" onAction="#onClassroomButton" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 1.5;" text="Classroom" textFill="WHITE">
+               <padding>
+                  <Insets bottom="7.0" left="15.0" right="15.0" top="7.0" />
+               </padding>
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="160.0" layoutY="32.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 1.5;" text="Gradebook" textFill="WHITE">
+               <padding>
+                  <Insets bottom="7.0" left="15.0" right="15.0" top="7.0" />
+               </padding>
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="236.0" layoutY="32.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 1.5;" text="Attendance" textFill="WHITE">
+               <padding>
+                  <Insets bottom="7.0" left="15.0" right="15.0" top="7.0" />
+               </padding>
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="515.0" layoutY="29.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 1.5;" text="Contact" textFill="WHITE">
+               <padding>
+                  <Insets bottom="7.0" left="15.0" right="15.0" top="7.0" />
+               </padding>
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+         <padding>
+            <Insets left="35.0" />
+         </padding>
+      </HBox>
+      <VBox alignment="CENTER_LEFT" layoutX="36.0" layoutY="88.0" prefHeight="520.0" prefWidth="440.0" spacing="30.0" style="-fx-border-color: #47D1D1;" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="36.0" AnchorPane.topAnchor="88.0">
+         <children>
+            <FontAwesomeIconView fx:id="courseLogo" fill="#47d1d1" size="64" />
+            <VBox prefHeight="59.0" prefWidth="378.0">
+               <children>
+                  <Label fx:id="courseName" text="Course Name" underline="true">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="courseID" text="C0000000">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="325.0" spacing="20.0">
+               <children>
+                  <VBox prefHeight="118.0" prefWidth="378.0" spacing="5.0">
+                     <children>
+                        <Label fx:id="courseTeacher" text="Course Teacher: ">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="totalWeeks" layoutX="10.0" layoutY="50.0" text="Total Weeks:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="startDate" layoutX="10.0" layoutY="10.0" text="Start Date:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="endDate" layoutX="10.0" layoutY="30.0" text="End Date:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="assignments" layoutX="10.0" layoutY="70.0" text="Assinments:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="resources" layoutX="10.0" layoutY="109.0" text="Resources:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <PieChart prefHeight="150.0" prefWidth="343.0" />
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+         </padding></VBox>
+      <TabPane layoutX="407.0" layoutY="88.0" prefHeight="520.0" prefWidth="570.0" style="-fx-border-color: red;" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="600.0" AnchorPane.rightAnchor="26.5" AnchorPane.topAnchor="88.0">
+        <tabs>
+          <Tab text="Discussions">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="314.0" prefWidth="377.0" AnchorPane.bottomAnchor="176.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <content>
+                              <VBox fx:id="discussions" prefHeight="302.0" prefWidth="375.0" spacing="10.0">
+                                 <padding>
+                                    <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                                 </padding>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                        <HBox alignment="CENTER" layoutY="390.0" minHeight="-Infinity" prefHeight="175.0" prefWidth="377.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                           <children>
+                              <VBox alignment="CENTER_LEFT" prefHeight="96.0" prefWidth="346.0" spacing="5.0">
+                                 <children>
+                                    <TextArea fx:id="discussionText" minWidth="-Infinity" prefHeight="94.0" prefWidth="346.0" promptText="Dicussions" wrapText="true">
+                                       <padding>
+                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                       </padding>
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </TextArea>
+                                    <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#onSendBtn" prefWidth="100.0" style="-fx-background-color: transparent; -fx-border-color: #47D1D1; -fx-border-width: 2;" text="Send" textFill="#47d1d1">
+                                       <padding>
+                                          <Insets bottom="6.0" top="6.0" />
+                                       </padding>
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Resources">
+               <content>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="15.0" style="-fx-background-color: yellow;">
+                           <padding>
+                              <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </content>
+            </Tab>
+            <Tab text="Assignments">
+               <content>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="15.0" style="-fx-background-color: blue;">
+                           <padding>
+                              <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

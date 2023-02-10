@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="1004.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.smsdemo.controllers.student.CourseListController">
+   <children>
+      <HBox alignment="CENTER_LEFT" layoutY="-2.0" prefHeight="76.0" prefWidth="1004.0" spacing="25.0" style="-fx-background-color: #47D1D1;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onDashboardButton" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 1.5;" text="Dashboard" textFill="WHITE">
+               <padding>
+                  <Insets bottom="7.0" left="15.0" right="15.0" top="7.0" />
+               </padding>
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="10.0" layoutY="32.0" mnemonicParsing="false" onAction="#onClassroomButton" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 1.5;" text="Classroom" textFill="WHITE">
+               <padding>
+                  <Insets bottom="7.0" left="15.0" right="15.0" top="7.0" />
+               </padding>
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="160.0" layoutY="32.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 1.5;" text="Gradebook" textFill="WHITE">
+               <padding>
+                  <Insets bottom="7.0" left="15.0" right="15.0" top="7.0" />
+               </padding>
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="236.0" layoutY="32.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 1.5;" text="Attendance" textFill="WHITE">
+               <padding>
+                  <Insets bottom="7.0" left="15.0" right="15.0" top="7.0" />
+               </padding>
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="515.0" layoutY="29.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 1.5;" text="Contact" textFill="WHITE">
+               <padding>
+                  <Insets bottom="7.0" left="15.0" right="15.0" top="7.0" />
+               </padding>
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+         <padding>
+            <Insets left="35.0" />
+         </padding>
+      </HBox>
+      <TableView fx:id="CourseList" layoutX="23.0" layoutY="92.0" prefHeight="504.0" prefWidth="958.0" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="92.0">
+        <columns>
+          <TableColumn fx:id="courseNumber" prefWidth="150.3999900817871" text="No" />
+          <TableColumn fx:id="courseName" minWidth="0.0" prefWidth="139.99998474121094" text="Course Name" />
+            <TableColumn fx:id="courseTeacher" minWidth="0.0" prefWidth="139.99998474121094" text="Course Teacher" />
+            <TableColumn fx:id="courseStartDate" minWidth="0.0" prefWidth="148.0" text="Start Date" />
+            <TableColumn fx:id="courseEndDate" minWidth="0.0" prefWidth="148.0" text="End Date" />
+            <TableColumn fx:id="actionField" minWidth="0.0" prefWidth="148.0" text="Action" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
