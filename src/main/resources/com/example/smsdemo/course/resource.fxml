@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="202.0" prefWidth="825.0" style="-fx-border-color: #47D1D1; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="122.0" prefWidth="308.0" spacing="10.0" style="-fx-border-color: #47D1D1;">
+         <children>
+            <Label fx:id="sectionTopic" text="Topic Of This Section">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
+               <content>
+                  <Label fx:id="sectionDescription" prefHeight="86.0" prefWidth="254.0" text="Given Description for this section tells about main points reagarding this section" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </content>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </ScrollPane>
+            <Label fx:id="sectionAuthor" layoutX="10.0" layoutY="28.0" text="Uploaded by Zarshedjon Nasimov" />
+            <Label fx:id="sectionDate" layoutX="25.0" layoutY="160.0" text="Date: 12/01/2023" />
+         </children>
+         <padding>
+            <Insets bottom="15.0" left="20.0" right="15.0" top="15.0" />
+         </padding>
+      </VBox>
+      <VBox prefHeight="198.0" prefWidth="511.0" spacing="10.0">
+         <children>
+            <Label text="Attachments">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
+               <content>
+                  <VBox fx:id="sectionAttachments" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="455.0" spacing="15.0">
+                           <children>
+                              <Label fx:id="attachmentText" text="1. Presentation File">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="attachmentLink" text="fileName2020.pptx" textFill="#4280e4" underline="true">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                              <Label fx:id="attachmentSize" text="5.2 mb">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </children>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+         <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </padding>
+      </VBox>
+   </children>
+</HBox>
