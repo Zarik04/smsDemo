@@ -418,27 +418,44 @@ public class SubjectViewController implements Initializable {
         section.setAttachments(attachments);
     }
 
-    private void fillResourcesBox(){
+    private void fillResourcesBox() throws Exception{
+        resources.getChildren().clear();
         for (ResourceSection section:resourceSections){
-            System.out.printf("\nSection Topic: %s\n" +
-                                "Section Description: %s\n" +
-                                "Section Author: %s %s\n" +
-                                "Section Date: %s\n" +
-                                "Section Attachments: \n",
-                    section.getTopic(), section.getDescription(),
-                    section.getAuthor().getName(), section.getAuthor().getSurname(),
-                    section.getDate());
+            HBox resourceSectionView = (HBox) FXMLLoader.load(HelloApplication.class.getResource("course/resource.fxml"));
+            VBox sectionDetails = (VBox) resourceSectionView.getChildren().get(0);
+            VBox attachmentDetails = (VBox) resourceSectionView.getChildren().get(1);
+
+            ((Label) sectionDetails.getChildren().get(0)).setText(section.getTopic());
+            ((Label) ((ScrollPane) sectionDetails.getChildren().get(1)).getContent()).setText(section.getDescription());
+            ((Label) sectionDetails.getChildren().get(2)).setText(String.format("Uploaded by %s %s .",
+                    section.getAuthor().getName(), section.getAuthor().getSurname()));
+            ((Label) sectionDetails.getChildren().get(3)).setText(String.format("Date: %s", section.getDate()));
+
             for (Attachment attachment:section.getAttachments()){
-                System.out.printf("\n\tAttachment Text: %s\n" +
-                                    "\tAttachment File: %s\n" +
-                                    "\tAttachment Size: %.3f kb\n\n",
-                        attachment.getText(), attachment.getFile().getName(),
-                        attachment.getSize());
+                HBox attachmentView = (HBox) FXMLLoader.load(HelloApplication.class.getResource("course/attachment.fxml"));
+                Label attachmentText = (Label) attachmentView.getChildren().get(0);
+                Label attachmentLink = (Label) attachmentView.getChildren().get(1);
+                Label attachmentSize = (Label) attachmentView.getChildren().get(2);
+
+                attachmentText.setText(String.valueOf(section.getAttachments().indexOf(attachment)+1)+". "+attachment.getText());
+                attachmentLink.setText(attachment.getFile().getName().substring(attachment.getFile().getName().indexOf('_')+1));
+                attachmentSize.setText(String.format("%.3f kb", attachment.getSize()));
+
+                ((VBox) ((ScrollPane) attachmentDetails.getChildren().get(1)).getContent()).getChildren().add((Node) attachmentView);
             }
+
+            resources.getChildren().add((Node) resourceSectionView);
+
         }
 
-
     }
+
+
+    @FXML
+    protected void onUploadSectionBtn(ActionEvent event){
+    }
+
+
 
 
 }

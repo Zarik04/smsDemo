@@ -191,10 +191,13 @@
                      <children>
                         <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="432.0" prefWidth="590.0" AnchorPane.bottomAnchor="176.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <content>
-                              <VBox fx:id="resources" prefHeight="200.0" prefWidth="100.0" />
+                              <VBox fx:id="resources" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                                 <padding>
+                                    <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                                 </padding></VBox>
                            </content>
                         </ScrollPane>
-                        <HBox layoutY="430.0" prefHeight="172.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <HBox alignment="CENTER" layoutY="430.0" prefHeight="172.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                            <children>
                               <VBox alignment="CENTER" prefHeight="172.0" prefWidth="407.0" spacing="15.0">
                                  <children>
@@ -220,7 +223,7 @@
                                           <Font size="13.0" />
                                        </font>
                                     </Button>
-                                    <Button layoutX="10.0" layoutY="10.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #47D1D1;" text="Upload" textFill="WHITE">
+                                    <Button layoutX="10.0" layoutY="10.0" minWidth="100.0" mnemonicParsing="false" onAction="#onUploadSectionBtn" style="-fx-background-color: #47D1D1;" text="Upload" textFill="WHITE">
                                        <padding>
                                           <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                        </padding>

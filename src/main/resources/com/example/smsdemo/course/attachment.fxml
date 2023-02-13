@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="455.0" spacing="15.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="attachmentText" text="1. Presentation File">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="attachmentLink" text="fileName2020.pptx" textFill="#4280e4" underline="true">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Label>
+      <Label fx:id="attachmentSize" text="5.2 mb">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+   </children>
+</HBox>
