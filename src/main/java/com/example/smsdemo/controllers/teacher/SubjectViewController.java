@@ -4,7 +4,9 @@ import com.example.smsdemo.HelloApplication;
 import com.example.smsdemo.controllers.utils.DbUtil;
 import com.example.smsdemo.controllers.utils.SceneChanger;
 import com.example.smsdemo.models.*;
+import com.example.smsdemo.models.courseSources.Attachment;
 import com.example.smsdemo.models.courseSources.Discussion;
+import com.example.smsdemo.models.courseSources.ResourceSection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,7 +22,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.io.File;
+import java.net.IDN;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -72,8 +78,14 @@ public class SubjectViewController implements Initializable {
     @FXML
     private TextArea discussionText;
 
+    @FXML
+    private VBox resources;
+
     private ObservableList<Student> studentObservableList = FXCollections.observableArrayList();
     private ObservableList<String> groupIdList = FXCollections.observableArrayList();
+
+    private ArrayList<ResourceSection> resourceSections = new ArrayList<>();
+
 
 
 
@@ -83,6 +95,7 @@ public class SubjectViewController implements Initializable {
             populateStudentsTable("SELECT ALL");
             setGroupList();
             addAllDiscussions();
+            addAllResources();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -331,6 +344,100 @@ public class SubjectViewController implements Initializable {
                 String.valueOf(user.getUserType().toUpperCase().charAt(0))+user.getUserID(), messageText));
         addAllDiscussions();
         discussionText.setText("");
+    }
+
+
+    private void addAllResources() throws Exception{
+        resourceSections.clear();
+        DbUtil.setDatabase("sms_courses_resources");
+        ResultSet rest = DbUtil.dbExecuteQuery(String.format("SELECT * FROM c%s;", subject.getCourseID()));
+        while (rest.next()){
+            ResourceSection resourceSection = new ResourceSection();
+            resourceSection.setID(String.valueOf(rest.getInt("ID")));
+            resourceSection.setTopic(rest.getString("topic"));
+            resourceSection.setDescription(rest.getString("description"));
+            Teacher author = new Teacher();
+            author.setUserID(rest.getString("author"));
+            resourceSection.setAuthor(author);
+            resourceSection.setDate(rest.getString("date"));
+            resourceSections.add(resourceSection);
+        }
+
+        rest.close();
+        DbUtil.dbDisconnect();
+
+        DbUtil.setDatabase("sms");
+        for (ResourceSection section:resourceSections){
+            Teacher author = section.getAuthor();
+            rest = DbUtil.dbExecuteQuery(String.format("SELECT * FROM teacher WHERE ID = %d;",
+                    Integer.valueOf(author.getUserID())));
+            if (rest.next()){
+                author.setName(rest.getString("f_name"));
+                author.setSurname(rest.getString("s_name"));
+            }
+
+            rest.close();
+            DbUtil.dbDisconnect();
+            addAllAttachments(section);
+        }
+
+        fillResourcesBox();
+
+
+    }
+
+
+    private void addAllAttachments(ResourceSection section) throws Exception{
+        ArrayList<Attachment> attachments = new ArrayList<>();
+        DbUtil.setDatabase("sms_courses_resources_attachments");
+        ResultSet rest = DbUtil.dbExecuteQuery(String.format("SELECT * FROM c%s_r%s;", subject.getCourseID(), section.getID()));
+        while (rest.next()){
+            Attachment attachment = new Attachment();
+            attachment.setID(String.valueOf(rest.getInt("ID")));
+            attachment.setResourceSectionID("r"+section.getID());
+            attachment.setText(rest.getString("attachment_text"));
+
+            try {
+                File file = new File(HelloApplication.class.getResource(String.format("course/resources/%s/r%s/%s_%s",
+                        subject.getCourseID(),section.getID(), attachment.getID(),
+                        rest.getString("attachment_file"))).toURI());
+                attachment.setFile(file);
+                attachment.setSize(rest.getDouble("attachment_size"));
+            }catch (Exception e){
+                e.printStackTrace();
+//                System.out.println(String.format("course/resources/%s/r%s/%s_%s",
+//                        subject.getCourseID(),section.getID(), attachment.getID(),
+//                        rest.getString("attachment_file")));
+            }
+            attachments.add(attachment);
+        }
+
+        rest.close();
+        DbUtil.dbDisconnect();
+
+        section.setAttachments(attachments);
+    }
+
+    private void fillResourcesBox(){
+        for (ResourceSection section:resourceSections){
+            System.out.printf("\nSection Topic: %s\n" +
+                                "Section Description: %s\n" +
+                                "Section Author: %s %s\n" +
+                                "Section Date: %s\n" +
+                                "Section Attachments: \n",
+                    section.getTopic(), section.getDescription(),
+                    section.getAuthor().getName(), section.getAuthor().getSurname(),
+                    section.getDate());
+            for (Attachment attachment:section.getAttachments()){
+                System.out.printf("\n\tAttachment Text: %s\n" +
+                                    "\tAttachment File: %s\n" +
+                                    "\tAttachment Size: %.3f kb\n\n",
+                        attachment.getText(), attachment.getFile().getName(),
+                        attachment.getSize());
+            }
+        }
+
+
     }
 
 
