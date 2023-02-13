@@ -201,12 +201,12 @@
                            <children>
                               <VBox alignment="CENTER" prefHeight="172.0" prefWidth="407.0" spacing="15.0">
                                  <children>
-                                    <TextField prefHeight="33.0" prefWidth="318.0" promptText="Topic">
+                                    <TextField fx:id="sectionTopic" prefHeight="33.0" prefWidth="318.0" promptText="Topic">
                                        <padding>
                                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                        </padding>
                                     </TextField>
-                                    <TextArea prefHeight="102.0" prefWidth="318.0" promptText="Description">
+                                    <TextArea fx:id="sectionDescription" prefHeight="102.0" prefWidth="318.0" promptText="Description">
                                        <padding>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding>
@@ -215,13 +215,16 @@
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="172.0" prefWidth="252.0" spacing="10.0">
                                  <children>
-                                    <Button minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #47D1D1;" text="Choose Files" textFill="WHITE">
+                                    <Button minWidth="100.0" mnemonicParsing="false" onAction="#onChooseFileBtn" style="-fx-background-color: #47D1D1;" text="Choose Files" textFill="WHITE">
                                        <padding>
                                           <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                        </padding>
                                        <font>
                                           <Font size="13.0" />
                                        </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                     </Button>
                                     <Button layoutX="10.0" layoutY="10.0" minWidth="100.0" mnemonicParsing="false" onAction="#onUploadSectionBtn" style="-fx-background-color: #47D1D1;" text="Upload" textFill="WHITE">
                                        <padding>
@@ -230,6 +233,9 @@
                                        <font>
                                           <Font size="13.0" />
                                        </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                     </Button>
                                  </children>
                               </VBox>

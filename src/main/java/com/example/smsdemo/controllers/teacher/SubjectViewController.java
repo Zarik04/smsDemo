@@ -21,6 +21,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.IDN;
@@ -80,6 +82,13 @@ public class SubjectViewController implements Initializable {
 
     @FXML
     private VBox resources;
+
+    @FXML
+    private TextField sectionTopic;
+    @FXML
+    private TextArea sectionDescription;
+    private ArrayList<File> sectionFiles = new ArrayList<>();
+
 
     private ObservableList<Student> studentObservableList = FXCollections.observableArrayList();
     private ObservableList<String> groupIdList = FXCollections.observableArrayList();
@@ -450,9 +459,50 @@ public class SubjectViewController implements Initializable {
 
     }
 
-
     @FXML
-    protected void onUploadSectionBtn(ActionEvent event){
+    protected void onChooseFileBtn(ActionEvent event){
+        sectionFiles.clear();
+        FileChooser newChooser = new FileChooser();
+        newChooser.setInitialDirectory(new File(String.format("C:/Users/%s", System.getProperty("user.name"))));
+        sectionFiles.addAll(newChooser.showOpenMultipleDialog(new Stage()));
+//        for (File file:sectionFiles){
+//            System.out.println(file.getName());
+//        }
+
+    }
+    @FXML
+    protected void onUploadSectionBtn(ActionEvent event) throws Exception{
+        sectionTopic.setText(sectionTopic.getText().trim());
+        sectionDescription.setText(sectionDescription.getText().trim());
+        if (!sectionTopic.getText().isEmpty()&&!sectionDescription.getText().isEmpty()&&!sectionFiles.isEmpty()){
+            ResourceSection newSection = new ResourceSection();
+            ArrayList<Attachment> attachments = new ArrayList<>();
+            ResultSet rest;
+            newSection.setTopic(sectionTopic.getText());
+            newSection.setDescription(sectionDescription.getText());
+            newSection.setAuthor((Teacher) LogSession.getUser());
+            newSection.setDate(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+
+            DbUtil.setDatabase("sms_courses_resources");
+            DbUtil.dbExecuteUpdate(String.format("INSERT INTO c%s (topic, description, author, date) " +
+                    "VALUES (\"%s\",\"%s\",\"%s\",\"%s\");", subject.getCourseID(),newSection.getTopic(),
+                    newSection.getDescription(), newSection.getAuthor().getUserID(), newSection.getDate()));
+            rest = DbUtil.dbExecuteQuery(String.format("SELECT * FROM c%s WHERE " +
+                    "topic = \"%s\" AND description = \"%s\" AND author = \"%s\" AND date = \"%s\";",
+                    subject.getCourseID(), newSection.getTopic(), newSection.getDescription(), newSection.getAuthor().getUserID(), newSection.getDate()));
+            if (DbUtil.getSize(rest)>1) rest.previous();
+            else rest.next();
+
+            newSection.setID(String.valueOf(rest.getInt("ID")));
+            rest.close();
+            DbUtil.dbConnect();
+
+            File sourceFolder = new File(HelloApplication.class.getResource(String.format("course/resources/%s/r%s",
+                    subject.getCourseID(), newSection.getID())).toURI());
+            sourceFolder.mkdir();
+
+
+        }
     }
 
 

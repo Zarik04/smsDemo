@@ -16,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Paint;
 import javafx.util.Callback;
 
+import java.io.File;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -374,7 +375,18 @@ public class AdminSubjectsController implements Initializable {
                                 "message VARCHAR(1000) " +
                                 ");", course.getCourseID()));
 
+                        DbUtil.setDatabase("sms_courses_resources");
+                        DbUtil.dbExecuteUpdate(String.format("CREATE TABLE c%s (" +
+                                "ID INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY, " +
+                                "topic VARCHAR(250), " +
+                                "description VARCHAR(450), " +
+                                "author VARCHAR(10), " +
+                                "date VARCHAR(100) " +
+                                ");", course.getCourseID()));
 
+                        File sourceFolder = new File(HelloApplication.class.getResource(String.format(
+                                "course/resources/%s", course.getCourseID())).toURI());
+                        sourceFolder.mkdir();
                     }catch (Exception ex){
                         ex.printStackTrace();
                     }
