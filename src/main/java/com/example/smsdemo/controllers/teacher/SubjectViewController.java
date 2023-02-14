@@ -95,6 +95,23 @@ public class SubjectViewController implements Initializable {
     private TextArea sectionDescription;
     private ArrayList<File> sectionFiles = new ArrayList<>();
 
+    @FXML
+    private VBox assignments;
+    @FXML
+    private TextField assignmentTopic;
+    @FXML
+    private TextArea assignmentDescription;
+    @FXML
+    private ChoiceBox<String> groupList1;
+    @FXML
+    private DatePicker assignmentStartDate;
+    @FXML
+    private DatePicker assignmentEndDate;
+    @FXML
+    private TextField assignmentMaxScore;
+    @FXML
+    private TextField assignmentMinScore;
+
 
     private ObservableList<Student> studentObservableList = FXCollections.observableArrayList();
     private ObservableList<String> groupIdList = FXCollections.observableArrayList();
@@ -570,6 +587,17 @@ public class SubjectViewController implements Initializable {
 
 
         }
+    }
+
+
+    @FXML
+    protected void onAddFilesButton(ActionEvent event){
+
+    }
+
+    @FXML
+    protected void onAssignButton(ActionEvent event){
+
     }
 
 
