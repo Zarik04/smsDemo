@@ -3,6 +3,7 @@ module com.example.smsdemo {
     requires javafx.fxml;
     requires java.sql;
     requires de.jensd.fx.glyphs.fontawesome;
+    requires java.desktop;
 
 
     opens com.example.smsdemo to javafx.fxml;

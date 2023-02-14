@@ -169,6 +169,17 @@ public class LoginController {
         DbUtil.dbExecuteUpdate(String.format("UPDATE %s SET log_status=0 WHERE ID=%d;", tableName, Integer.valueOf(LogSession.getUser().getUserID())));
         LogSession.setUser(null);
 
+        File userFilesFolder = new File("user files");
+        String[] userFiles = userFilesFolder.list();
+
+        for (String fileName: userFiles){
+            try {
+                (new File(userFilesFolder.getAbsolutePath()+"/"+fileName)).delete();
+            }catch (Exception e){
+                System.out.printf("\n\tCould not delete %s in user files folder !!!\n", fileName);
+            }
+        }
+
     }
 
 }

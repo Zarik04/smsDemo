@@ -384,8 +384,8 @@ public class AdminSubjectsController implements Initializable {
                                 "date VARCHAR(100) " +
                                 ");", course.getCourseID()));
 
-                        File sourceFolder = new File(HelloApplication.class.getResource(String.format(
-                                "course/resources/%s", course.getCourseID())).toURI());
+                        File sourceFolder = new File(String.format(
+                                "course resources/%s", course.getCourseID()));
                         sourceFolder.mkdir();
                     }catch (Exception ex){
                         ex.printStackTrace();

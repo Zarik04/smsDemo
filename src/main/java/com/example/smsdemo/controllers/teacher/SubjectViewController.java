@@ -25,8 +25,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.net.IDN;
 import java.net.URL;
+import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.ResultSet;
@@ -34,6 +37,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.awt.Desktop;
+
 
 public class SubjectViewController implements Initializable {
 
@@ -94,6 +99,7 @@ public class SubjectViewController implements Initializable {
     private ObservableList<String> groupIdList = FXCollections.observableArrayList();
 
     private ArrayList<ResourceSection> resourceSections = new ArrayList<>();
+
 
 
 
@@ -375,8 +381,8 @@ public class SubjectViewController implements Initializable {
         rest.close();
         DbUtil.dbDisconnect();
 
-        DbUtil.setDatabase("sms");
         for (ResourceSection section:resourceSections){
+            DbUtil.setDatabase("sms");
             Teacher author = section.getAuthor();
             rest = DbUtil.dbExecuteQuery(String.format("SELECT * FROM teacher WHERE ID = %d;",
                     Integer.valueOf(author.getUserID())));
@@ -407,16 +413,13 @@ public class SubjectViewController implements Initializable {
             attachment.setText(rest.getString("attachment_text"));
 
             try {
-                File file = new File(HelloApplication.class.getResource(String.format("course/resources/%s/r%s/%s_%s",
+                File file = new File(String.format("course resources/%s/r%s/%s_%s",
                         subject.getCourseID(),section.getID(), attachment.getID(),
-                        rest.getString("attachment_file"))).toURI());
+                        rest.getString("attachment_file")));
                 attachment.setFile(file);
                 attachment.setSize(rest.getDouble("attachment_size"));
             }catch (Exception e){
                 e.printStackTrace();
-//                System.out.println(String.format("course/resources/%s/r%s/%s_%s",
-//                        subject.getCourseID(),section.getID(), attachment.getID(),
-//                        rest.getString("attachment_file")));
             }
             attachments.add(attachment);
         }
@@ -448,6 +451,29 @@ public class SubjectViewController implements Initializable {
 
                 attachmentText.setText(String.valueOf(section.getAttachments().indexOf(attachment)+1)+". "+attachment.getText());
                 attachmentLink.setText(attachment.getFile().getName().substring(attachment.getFile().getName().indexOf('_')+1));
+                attachmentLink.setOnMouseClicked(mouseEvent -> {
+                    try {
+                        File newFile = new File(String.format("user files/%s",
+                                attachment.getFile().getName().substring(attachment.getFile().getName().indexOf('_')+1)));
+                        if (newFile.exists()) newFile.delete();
+                        newFile.createNewFile();
+                        FileChannel src = new FileInputStream(attachment.getFile().getAbsolutePath()).getChannel();
+                        FileChannel dest = new FileOutputStream(newFile.getAbsolutePath()).getChannel();
+                        try {
+                            dest.transferFrom(src, 0, src.size());
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }finally {
+                            src.close();
+                            dest.close();
+                        }
+
+                        Desktop.getDesktop().open(newFile);
+                        System.out.println("file is closed");
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                });
                 attachmentSize.setText(String.format("%.3f kb", attachment.getSize()));
 
                 ((VBox) ((ScrollPane) attachmentDetails.getChildren().get(1)).getContent()).getChildren().add((Node) attachmentView);
@@ -465,11 +491,9 @@ public class SubjectViewController implements Initializable {
         FileChooser newChooser = new FileChooser();
         newChooser.setInitialDirectory(new File(String.format("C:/Users/%s", System.getProperty("user.name"))));
         sectionFiles.addAll(newChooser.showOpenMultipleDialog(new Stage()));
-//        for (File file:sectionFiles){
-//            System.out.println(file.getName());
-//        }
-
     }
+
+
     @FXML
     protected void onUploadSectionBtn(ActionEvent event) throws Exception{
         sectionTopic.setText(sectionTopic.getText().trim());
@@ -490,16 +514,58 @@ public class SubjectViewController implements Initializable {
             rest = DbUtil.dbExecuteQuery(String.format("SELECT * FROM c%s WHERE " +
                     "topic = \"%s\" AND description = \"%s\" AND author = \"%s\" AND date = \"%s\";",
                     subject.getCourseID(), newSection.getTopic(), newSection.getDescription(), newSection.getAuthor().getUserID(), newSection.getDate()));
-            if (DbUtil.getSize(rest)>1) rest.previous();
-            else rest.next();
-
+            rest.next();
             newSection.setID(String.valueOf(rest.getInt("ID")));
             rest.close();
             DbUtil.dbConnect();
 
-            File sourceFolder = new File(HelloApplication.class.getResource(String.format("course/resources/%s/r%s",
-                    subject.getCourseID(), newSection.getID())).toURI());
+            File sourceFolder = new File(String.format("course resources/%s/r%s",
+                    subject.getCourseID(), newSection.getID()));
             sourceFolder.mkdir();
+
+            DbUtil.setDatabase("sms_courses_resources_attachments");
+            DbUtil.dbExecuteUpdate(String.format("CREATE TABLE c%s_r%s (" +
+                    "ID INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY, " +
+                    "attachment_text VARCHAR(250), " +
+                    "attachment_file VARCHAR(200), " +
+                    "attachment_size DOUBLE " +
+                    ");", subject.getCourseID(), newSection.getID()));
+
+            for (File attachment:sectionFiles){
+                DbUtil.dbExecuteUpdate(String.format("INSERT INTO c%s_r%s (attachment_text, attachment_file, attachment_size) VALUES " +
+                        "(\"%s\", \"%s\", %.3f);", subject.getCourseID(), newSection.getID(), attachment.getName().substring(0, attachment.getName().indexOf('.')),
+                        attachment.getName(), (double) Files.size(Path.of(attachment.getAbsolutePath()))/1024));
+                rest = DbUtil.dbExecuteQuery(String.format("SELECT * FROM c%s_r%s WHERE " +
+                        "attachment_file = \"%s\";", subject.getCourseID(), newSection.getID(), attachment.getName()));
+                rest.next();
+                Attachment newAttachment = new Attachment();
+                newAttachment.setID(String.valueOf(rest.getInt("ID")));
+                rest.close();
+                DbUtil.dbConnect();
+                File newFile = new File(String.format("course resources/%s/r%s/%s_%s",
+                        subject.getCourseID(), newSection.getID(), newAttachment.getID(), attachment.getName()));
+
+                newFile.createNewFile();
+
+                FileChannel src = new FileInputStream(attachment.getAbsolutePath()).getChannel();
+                FileChannel dest = new FileOutputStream(newFile.getAbsolutePath()).getChannel();
+
+                try {
+                    dest.transferFrom(src, 0, src.size());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }finally {
+                    src.close();
+                    dest.close();
+                }
+
+            }
+
+            sectionTopic.setText("");
+            sectionDescription.setText("");
+            sectionFiles.clear();
+
+            addAllResources();
 
 
         }
