@@ -120,12 +120,12 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="assignments" layoutX="10.0" layoutY="70.0" text="Assinments:">
+                        <Label fx:id="assignmentsCounter" layoutX="10.0" layoutY="70.0" text="Assinments:">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="resources" layoutX="10.0" layoutY="109.0" text="Resources:">
+                        <Label fx:id="resourcesCounter" layoutX="10.0" layoutY="109.0" text="Resources:">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -192,7 +192,7 @@
                <content>
                   <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
                      <content>
-                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="15.0" style="-fx-background-color: yellow;">
+                        <VBox fx:id="resources" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                            <padding>
                               <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                            </padding>

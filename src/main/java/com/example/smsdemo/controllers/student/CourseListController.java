@@ -110,7 +110,7 @@ public class CourseListController implements Initializable {
                                         System.out.println("Delete");
                                         try {
                                             quitCourse(course);
-                                            SceneChanger.changeScene(event, "admin/courseList.fxml", "Courses");
+                                            SceneChanger.changeScene(event, "student/courseList.fxml", "Courses");
                                         }catch (Exception ex){
                                             ex.printStackTrace();
                                         }

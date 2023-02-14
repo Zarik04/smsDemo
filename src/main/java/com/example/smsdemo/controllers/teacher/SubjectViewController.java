@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.IDN;
+import java.net.URI;
 import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
@@ -469,7 +470,7 @@ public class SubjectViewController implements Initializable {
                         }
 
                         Desktop.getDesktop().open(newFile);
-                        System.out.println("file is closed");
+
                     }catch (Exception e){
                         e.printStackTrace();
                     }
