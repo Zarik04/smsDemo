@@ -15,6 +15,11 @@
    <children>
       <HBox alignment="CENTER_LEFT" layoutY="-2.0" prefHeight="76.0" prefWidth="1004.0" spacing="25.0" style="-fx-background-color: #47D1D1;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
+            <Label text="ESEMES" textFill="WHITE">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
             <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 1.5;" text="Dashboard" textFill="WHITE">
                <padding>
                   <Insets bottom="7.0" left="15.0" right="15.0" top="7.0" />
@@ -81,14 +86,6 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Label text="Student Management System" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="300.0" />
-               </HBox.margin>
-            </Label>
          </children>
          <padding>
             <Insets left="35.0" />

@@ -597,7 +597,16 @@ public class SubjectViewController implements Initializable {
 
     @FXML
     protected void onAssignButton(ActionEvent event){
+        assignmentTopic.setText(assignmentTopic.getText().trim());
+        assignmentDescription.setText(assignmentDescription.getText().trim());
+        assignmentMaxScore.setText(assignmentMaxScore.getText().trim());
+        assignmentMinScore.setText(assignmentMinScore.getText().trim());
 
+        if (!assignmentTopic.getText().isEmpty()&&!assignmentDescription.getText().isEmpty()&&
+                groupList1.getSelectionModel().getSelectedItem()!=null&&!assignmentStartDate.getEditor().getText().isEmpty()&&
+                !assignmentEndDate.getEditor().getText().isEmpty()&&!assignmentMaxScore.getText().isEmpty()&&!assignmentMinScore.getText().isEmpty()){
+            
+        }
     }
 
 
